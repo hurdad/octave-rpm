@@ -21,7 +21,7 @@ download: mkdir
 	curl -L -o rpmbuild/SOURCES/$(full_name).tar.gz $(download_url); 
 
 rpm: download
-	yum-builddep octave
+	sudo yum-builddep octave
 	rpmbuild $(RPM_OPTS) \
 	  --define "_topdir %(pwd)" \
 	  --define "_builddir %{_topdir}/rpmbuild/BUILD" \

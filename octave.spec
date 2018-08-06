@@ -77,24 +77,21 @@ Requires:       atlas-devel gcc-c++ gcc-gfortran
 The octave-devel package contains files needed for developing
 applications which use GNU Octave.
 
-%package doc
-Summary:        Documentation for Octave
-Group:          Documentation
-BuildArch:      noarch
-
-%description doc
-This package contains documentation for Octave.
-
 %prep
 %setup -n %{name}-%{version}
 
 %build
-%configure --enable-shared --disable-static \
- --enable-float-truncate \
- --with-qrupdate \
- --with-amd --with-umfpack --with-colamd --with-ccolamd --with-cholmod \
- --with-cxsparse \
- --disable-jit
+%configure --enable-shared \
+			 --disable-static \
+			 --enable-float-truncate \
+			 --with-qrupdate \
+			 --with-amd \
+			 --with-umfpack \
+			 --with-colamd \
+			 --with-ccolamd \
+			 --with-cholmod \
+			 --with-cxsparse \
+			 --disable-jit
 make %{?_smp_mflags} 
 
 %install
@@ -113,39 +110,19 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 
 %files
+%doc AUTHORS BUGS ChangeLog NEWS README
 %license COPYING
-%{_pkgdocdir}/AUTHORS
-%{_pkgdocdir}/BUGS
-%{_pkgdocdir}/ChangeLog
-%{_pkgdocdir}/NEWS
-%{_pkgdocdir}/README
-%config(noreplace) %{_sysconfdir}/ld.so.conf.d/octave-*.conf
 %{_bindir}/octave*
 %{_libdir}/octave/
 %{_libexecdir}/octave/
-%{_mandir}/man1/octave*.1.*
-%{_infodir}/liboctave.info*
-%{_infodir}/octave.info*
-%{_datadir}/appdata/%{name}.appdata.xml
-%{_datadir}/applications/octave.desktop
-%dir %{_datadir}/octave
-%{_datadir}/octave/%{version}%{?rctag}/
-%{_datadir}/octave/ls-R
-%ghost %{_datadir}/octave/octave_packages
-%{_datadir}/octave/packages/
-%{_datadir}/octave/site/
+%{_datarootdir}/octave/
+%{_datarootdir}/applications/org.octave.Octave.desktop
+%{_datarootdir}/icons/
+%{_datarootdir}/metainfo/org.octave.Octave.appdata.xml
 
 %files devel
-%{_rpmconfigdir}/macros.d/macros.octave
 %{_bindir}/mkoctfile
 %{_bindir}/mkoctfile-%{version}
 %{_includedir}/octave-%{version}/
-%{_mandir}/man1/mkoctfile.1.*
 
-%files doc
-%{_pkgdocdir}/examples/
-%{_pkgdocdir}/liboctave.html/
-%{_pkgdocdir}/liboctave.pdf
-%{_pkgdocdir}/octave.html
-%{_pkgdocdir}/octave.pdf
-%{_pkgdocdir}/refcard*.pdf
+%changelog
